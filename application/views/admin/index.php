@@ -1,0 +1,1 @@
+<input id='product_file' type='file'/>
