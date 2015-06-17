@@ -26,8 +26,8 @@ class Admin extends LayoutController {
 		$colors = $_POST['colors'];
 		$this->application->insertApplications($applications);
 		$this->color->insertColors($colors);
-		$applications = $this->application->getApplications();
-		$colors = $this->color->getColors();
+		$applications = $this->application->getApplications(false);
+		$colors = $this->color->getColors(false);
 		$insertionResult = $this->product->insertProducts($products, $colors, $applications);
 		header('Content-Type: application/json');
 		print json_encode($insertionResult);

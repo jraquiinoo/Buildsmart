@@ -51,9 +51,9 @@
 				if(isset($productSpec->brand))
 					$this->db->where('product_brand', $productSpec->brand);
 				if(isset($productSpec->colors))
-					$this->db->where_in('colors.color_name', $productSpec->colors);
+					$this->db->where_in('colors.color_id', $productSpec->colors);
 				if(isset($productSpec->applications))
-					$this->db->where_in('applications.application_name', $productSpec->applications);
+					$this->db->where_in('applications.application_id', $productSpec->applications);
 				if(isset($productSpec->textures))
 					$this->db->where_in('products.product_texture', $productSpec->textures);
 			}
@@ -133,11 +133,11 @@
 				$currentProductCode = $product['product_code'];
 				$applicationsOfCurrentProduct = array();
         		foreach($product['product_applications'] as $currentProductApplication){
-        			$applicationsOfCurrentProduct[] = $applications[strtolower($currentProductApplication)];
+        			$applicationsOfCurrentProduct[] = $applications[strtolower($currentProductApplication)]['application_id'];
         		}
         		$colorsOfCurrentProduct = array();
         		foreach($product['product_colors'] as $currentProductColor){
-        			$colorsOfCurrentProduct[] = $colors[strtolower($currentProductColor)];
+        			$colorsOfCurrentProduct[] = $colors[strtolower($currentProductColor)]['color_id'];
         		}
 				$productsToBeInserted[$currentProductCode] = array(
 					'product_details' => array(

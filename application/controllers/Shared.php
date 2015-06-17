@@ -18,8 +18,8 @@
 				$this->applyProductFilter();
 			}
 			$products = $this->product->getProducts($this->productspec);
-			$colors = array_keys($this->color->getColors());
-			$applications = array_keys($this->application->getApplications());
+			$colors = $this->color->getColors(true);
+			$applications = $this->application->getApplications(true);
 			$textures = $this->product->getTextures();
 			$this->setPageTitle('Products - Buildsmart')
 				 ->setMainPageContent('default/index')
@@ -40,8 +40,8 @@
 			}
 			if(isset($category) && $this->product->hasCategory($category)){
 				$products = $this->product->getProducts($this->productspec);
-				$colors = array_keys($this->color->getColors());
-				$applications = array_keys($this->application->getApplications());
+				$colors = $this->color->getColors(true);
+				$applications = $this->application->getApplications(true);
 				$textures = $this->product->getTextures();
 				$this->setPageTitle(ucfirst($category) . ' - Buildsmart')
 					 ->setMainPageContent('default/index')
@@ -63,8 +63,8 @@
 			}
 			if(isset($brand) && $this->product->hasBrand($brand)){
 				$products = $this->product->getProducts($this->productspec);
-				$colors = array_keys($this->color->getColors());
-				$applications = array_keys($this->application->getApplications());
+				$colors = $this->color->getColors(true);
+				$applications = $this->application->getApplications(true);
 				$textures = $this->product->getTextures();
 				$this->setPageTitle(ucfirst($brand) . ' - Buildsmart')
 					 ->setMainPageContent('default/index')

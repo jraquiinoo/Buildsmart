@@ -5,11 +5,21 @@
 			$this->load->database();
 		}
 
-		public function getColors(){
+		public function getColors($idIndexed){
 			$query = $this->db->get('colors');
 			$colors = array();
 			foreach($query->result() as $row){
-				$colors[strtolower($row->color_name)] = $row->color_id;
+				if($idIndexed){
+					$colors[$row->color_id] = array(
+						'color_id' => $row->color_id,
+						'color_name' => strtolower($row->color_name)
+					);	
+				} else {
+					$colors[strtolower($row->color_name)] = array(
+						'color_id' => $row->color_id,
+						'color_name' => strtolower($row->color_name)
+					);
+				}
 			}
 			return $colors;
 		}
@@ -32,7 +42,7 @@
 		}
 
 		private function filterColorsToBeInserted($colors){
-			$colorsWithDuplicateNames = $this->getColorsByColorName(array_keys($colors));
+			$colorsWithDuplicateNames = $this->getColorsByName(array_keys($colors));
 			$duplicateColors = array();
 			foreach($colorsWithDuplicateNames as $duplicateColor){
 				$duplicateColors[] = $duplicateColor->color_name;
@@ -41,7 +51,13 @@
 			return $uniqueColors;
 		}
 
-		private function getColorsByColorName($colorNames){
+		private function getColorsById($colorIds){
+			$this->db->where_in('color_id', $colorIds);
+			$query = $this->db->get('colors');
+			return $query->result();
+		}
+
+		private function getColorsByName($colorNames){
 			$this->db->where_in('color_name', $colorNames);
 			$query = $this->db->get('colors');
 			return $query->result();

@@ -5,11 +5,21 @@
 			$this->load->database();
 		}
 
-		public function getApplications(){
+		public function getApplications($idIndexed = true){
 			$query = $this->db->get('applications');
 			$applications = array();
 			foreach($query->result() as $row){
-				$applications[strtolower($row->application_name)] = $row->application_id;
+				if($idIndexed){
+					$applications[$row->application_id] = array(
+						'application_id' => $row->application_id,
+						'application_name' => strtolower($row->application_name)
+					);
+				} else{
+					$applications[strtolower($row->application_name)] = array(
+						'application_id' => $row->application_id,
+						'application_name' => strtolower($row->application_name)
+					);
+				}
 			}
 			return $applications;
 		}
